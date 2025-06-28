@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modal Styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 relative;
+}
+
+.modal-body {
+  @apply p-8;
+}
+
+/* Button Styles */
+.back-button {
+  @apply absolute top-4 left-4 text-gray-600 hover:text-gray-800 flex items-center;
+}
+
+.back-icon {
+  @apply w-5 h-5 mr-1;
+}
+
+/* Feedback Card Styles */
+.feedback-title {
+  @apply text-2xl font-bold text-gray-800 mt-4 mb-2;
+}
+
+.category-tags {
+  @apply flex flex-wrap gap-2 mb-4;
+}
+
+.category-tag {
+  @apply px-3 py-1 rounded-full text-sm;
+}
+
+.main-category {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.sub-category {
+  @apply bg-green-100 text-green-800;
+}
+
+.description-section {
+  @apply mt-4;
+}
+
+.section-title {
+  @apply text-lg font-semibold text-gray-700 mb-2;
+}
+
+.feedback-description {
+  @apply text-gray-600 whitespace-pre-wrap;
+}
+
+.submission-date {
+  @apply mt-6 text-sm text-gray-500;
+}
+
+/* Form Styles */
+.form-container {
+  @apply max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md;
+}
+
+.form-title {
+  @apply text-2xl font-bold text-gray-800 mb-6;
+}
+
+.form-error {
+  @apply mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700;
+}
+
+.form-grid {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-2;
+}
+
+.input-group {
+  @apply mb-4;
+}
+
+.input-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.input-field {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500;
+}
+
+.char-count {
+  @apply mt-1 text-xs text-gray-500;
+}
+
+.submit-button {
+  @apply w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.submit-button-disabled {
+  @apply opacity-75 cursor-not-allowed;
+}
+
+/* Navigation Styles */
+.nav-container {
+  @apply bg-white shadow-lg;
+}
+
+.nav-content {
+  @apply max-w-6xl mx-auto px-4;
+}
+
+.nav-items {
+  @apply flex justify-between items-center h-16;
+}
+
+.nav-brand {
+  @apply flex items-center space-x-3;
+}
+
+.brand-text {
+  @apply text-2xl font-bold text-blue-600;
+}
+
+.nav-links {
+  @apply flex items-center space-x-4;
+}
+
+.nav-link {
+  @apply text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium;
+}
+
+/* Layout Styles */
+.page-container {
+  @apply container mx-auto px-4 py-8;
+}
+
+.content-wrapper {
+  @apply max-w-3xl mx-auto;
+}
+
+/* Hero Section Styles */
+.hero-section {
+  @apply bg-white;
+}
+
+.hero-content {
+  @apply max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8;
+}
+
+.hero-text-center {
+  @apply text-center;
+}
+
+.hero-title {
+  @apply text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl;
+}
+
+.hero-description {
+  @apply mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl;
+}
+
+.hero-buttons {
+  @apply mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8;
+}
+
+.primary-button {
+  @apply w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10;
+}
+
+.secondary-button {
+  @apply w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10;
+}
+
+/* Feature Card Styles */
+.feature-card {
+  @apply p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+}
+
+.feature-title {
+  @apply text-lg font-medium text-gray-900 mb-2;
+}
+
+.feature-description {
+  @apply text-base text-gray-500;
+}
+
+/* Contact Popup Styles */
+.contact-popup {
+  @apply absolute right-0 w-64 mt-2 p-4 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200;
+}
+
+/* Explore Page Styles */
+.filter-section {
+  @apply flex gap-4 mb-6;
+}
+
+.filter-group {
+  @apply w-1/4;
+}
+
+.search-container {
+  @apply w-1/2 relative;
+}
+
+.search-input {
+  @apply w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500;
+}
+
+.search-icon {
+  @apply absolute left-3 top-2.5 h-5 w-5 text-gray-400;
+}
+
+.active-filters {
+  @apply flex flex-wrap gap-2 mb-4;
+}
+
+.filter-tag {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm;
+}
+
+.filter-tag.main-category {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.filter-tag.sub-category {
+  @apply bg-green-100 text-green-800;
+}
+
+.filter-remove {
+  @apply ml-2 hover:text-gray-700;
+}
+
+.loading-state {
+  @apply text-center py-8;
+}
+
+.loading-spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto;
+}
+
+.loading-text {
+  @apply mt-4 text-gray-600;
+}
+
+.error-message {
+  @apply text-center py-8 text-red-600;
+}
+
+.empty-state {
+  @apply text-center py-8 text-gray-600;
+}
+
+.feedback-grid {
+  @apply grid gap-6;
+}
+
+.feedback-card {
+  @apply bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200;
+}
+
+.feedback-date {
+  @apply mt-4 text-sm text-gray-500;
+}
