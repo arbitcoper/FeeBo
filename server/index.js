@@ -57,8 +57,6 @@ const connectDB = async () => {
 connectDB();
 
 // Routes
-const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
 app.use('/api/feedback', feedbackRoutes);
 
 // Basic route for testing
