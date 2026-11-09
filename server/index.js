@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://ankeshkr0921:kae8OXCW9x0Bgj5c@feebo.bttbi1o.mongodb.net/feebo?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 let cachedPromise = null;
 
