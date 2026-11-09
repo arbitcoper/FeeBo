@@ -24,37 +24,56 @@ app.use((req, res, next) => {
 });
 
 // MongoDB Connection
-const MONGODB_URI = 'mongodb+srv://ankeshkr0921:kae8OXCW9x0Bgj5c@feebo.bttbi1o.mongodb.net/feebo?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://ankeshkr0921:kae8OXCW9x0Bgj5c@feebo.bttbi1o.mongodb.net/feebo?retryWrites=true&w=majority';
+
+let cachedPromise = null;
 
 const connectDB = async () => {
-  try {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (!cachedPromise) {
     const options = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+      serverSelectionTimeoutMS: 15000,
       socketTimeoutMS: 45000
     };
 
     console.log('Attempting to connect to MongoDB Atlas...');
-    const conn = await mongoose.connect(MONGODB_URI, options);
-    console.log(`MongoDB Atlas Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error('MongoDB connection error:', {
-      name: error.name,
-      message: error.message,
-      code: error.code,
-      codeName: error.codeName,
-      stack: error.stack
-    });
-    
-    // Retry connection
-    console.log('Retrying connection in 5 seconds...');
-    setTimeout(connectDB, 5000);
+    cachedPromise = mongoose.connect(MONGODB_URI, options)
+      .then((conn) => {
+        console.log(`MongoDB Atlas Connected: ${conn.connection.host}`);
+        return conn;
+      })
+      .catch((error) => {
+        cachedPromise = null;
+        console.error('MongoDB connection error:', {
+          name: error.name,
+          message: error.message,
+          code: error.code
+        });
+        throw error;
+      });
   }
+
+  return cachedPromise;
 };
 
-// Connect to MongoDB
-connectDB();
+// Ensure database is connected before handling any API request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection failed on request:', error.message);
+    res.status(503).json({
+      message: 'Database connection failed. Please ensure MONGODB_URI is configured and MongoDB Atlas allows connections from anywhere (0.0.0.0/0).',
+      error: error.message
+    });
+  }
+});
 
 // Routes
 app.use('/api/feedback', feedbackRoutes);
@@ -81,43 +100,28 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
-// Start server regardless of DB connection
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-// Handle MongoDB connection events
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected to MongoDB Atlas');
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error('Mongoose connection error:', {
-    name: err.name,
-    message: err.message,
-    code: err.code,
-    codeName: err.codeName
+// Only listen directly when not running in Vercel serverless environment
+if (!process.env.VERCEL) {
+  const server = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
-});
 
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected');
-  // Attempt to reconnect
-  setTimeout(connectDB, 5000);
-});
+  // Handle server shutdown
+  process.on('SIGINT', async () => {
+    try {
+      await mongoose.connection.close();
+      server.close(() => {
+        console.log('Server closed. Database instance disconnected');
+        process.exit(0);
+      });
+    } catch (err) {
+      console.error('Error during shutdown:', err);
+      process.exit(1);
+    }
+  });
+}
 
-// Handle server shutdown
-process.on('SIGINT', async () => {
-  try {
-    await mongoose.connection.close();
-    server.close(() => {
-      console.log('Server closed. Database instance disconnected');
-      process.exit(0);
-    });
-  } catch (err) {
-    console.error('Error during shutdown:', err);
-    process.exit(1);
-  }
-}); 
+// Export Express app for Vercel Serverless Function
+module.exports = app;

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FeedbackCard from '../components/feedback/FeedbackCard';
 import { CATEGORIES, Feedback } from '../types/feedback';
-
-const API_URL = 'http://localhost:5000/api/feedback';
+import { API_URL } from '../config/api';
 
 const ExplorePage: React.FC = () => {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);

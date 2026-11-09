@@ -1,7 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { CATEGORIES } from '../../types/feedback';
-
-const API_URL = 'http://localhost:5000/api/feedback';
+import { API_URL } from '../../config/api';
 
 const FeedbackForm = () => {
   const [title, setTitle] = useState('');
